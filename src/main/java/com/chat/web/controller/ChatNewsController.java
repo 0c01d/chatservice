@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,7 +30,7 @@ public class ChatNewsController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(method = RequestMethod.POST)
-    public ChatNewsResponse createChatNews(@RequestBody ChatNewsRequest chatNewsRequest, HttpServletResponse response) {
+    public ChatNewsResponse createChatNews(@Valid @RequestBody ChatNewsRequest chatNewsRequest, HttpServletResponse response) {
         ChatNews chatNews = chatNewsService.createChatNews(chatNewsRequest);
         response.addHeader(HttpHeaders.LOCATION, "/chatnews/" + chatNews.getId());
         return new ChatNewsResponse(chatNews);
